@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>ประตูเงินประตูทอง | สวรรค์หรือนรก</title>
+<style>
+  :root{
+    --gold:#ffd66b;
+    --deep:#3b1600;
+    --red:#d72638;
+    --orange:#ff7a18;
+    --cream:#fff4d6;
+    --dark:#140800;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{
+    margin:0;
+    min-height:100vh;
+    overflow:hidden;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",Arial,sans-serif;
+    color:white;
+    background:
+      radial-gradient(circle at 50% 5%, rgba(255,230,120,.65), transparent 28%),
+      radial-gradient(circle at 20% 20%, rgba(255,80,40,.35), transparent 22%),
+      radial-gradient(circle at 85% 20%, rgba(255,210,80,.30), transparent 24%),
+      linear-gradient(145deg, #160600 0%, #451300 45%, #110400 100%);
+  }
+  .sparkles{
+    position:fixed; inset:0; pointer-events:none; opacity:.6;
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,.9) 0 1px, transparent 1.5px),
+      radial-gradient(circle, rgba(255,214,107,.9) 0 1.2px, transparent 1.8px);
+    background-size: 70px 70px, 110px 110px;
+    animation: drift 18s linear infinite;
+  }
+  @keyframes drift{from{background-position:0 0, 0 0}to{background-position:240px -240px, -220px 220px}}
+  .wrap{
+    position:relative;
+    min-height:100vh;
+    padding: max(22px, env(safe-area-inset-top)) 24px max(18px, env(safe-area-inset-bottom));
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .title{
+    text-align:center;
+    margin-top:6px;
+    text-shadow:0 4px 22px rgba(0,0,0,.65);
+  }
+  .title .small{
+    font-weight:800;
+    letter-spacing:.04em;
+    color:var(--gold);
+    font-size: clamp(20px, 3vw, 34px);
+  }
+  .title h1{
+    margin:.05em 0 0;
+    font-size: clamp(34px, 6vw, 78px);
+    line-height:1;
+    font-weight:1000;
+    background:linear-gradient(180deg,#fff7c5,#ffd05b 40%,#a45d00 100%);
+    -webkit-background-clip:text;
+    color:transparent;
+    filter:drop-shadow(0 5px 7px rgba(0,0,0,.5));
+  }
+  .subtitle{
+    margin-top:8px;
+    font-size: clamp(15px, 2.2vw, 24px);
+    color:#fff1bf;
+    font-weight:700;
+  }
+  .stage{
+    width:min(1100px, 100%);
+    flex:1;
+    display:grid;
+    place-items:center;
+    padding:16px 0 8px;
+  }
+  .cards{
+    width:100%;
+    display:grid;
+    grid-template-columns: repeat(5, minmax(95px, 1fr));
+    gap: clamp(10px, 1.6vw, 18px);
+  }
+  .card{
+    position:relative;
+    aspect-ratio: 3 / 4.08;
+    perspective:1200px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .inner{
+    position:absolute; inset:0;
+    transform-style:preserve-3d;
+    transition: transform .78s cubic-bezier(.2,.85,.2,1);
+  }
+  .card.open .inner{ transform:rotateY(180deg); }
+  .face{
+    position:absolute; inset:0;
+    border-radius:22px;
+    backface-visibility:hidden;
+    box-shadow: 0 12px 28px rgba(0,0,0,.45), inset 0 0 0 2px rgba(255,255,255,.18);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    overflow:hidden;
+  }
+  .front{
+    background:
+      radial-gradient(circle at 50% 24%, rgba(255,255,255,.32), transparent 23%),
+      linear-gradient(145deg, #fff1a4 0%, #d7981f 35%, #8a3700 100%);
+    border:2px solid rgba(255,234,142,.9);
+  }
+  .front:before{
+    content:"";
+    position:absolute; inset:9px;
+    border:2px dashed rgba(255,255,255,.55);
+    border-radius:17px;
+  }
+  .front .num{
+    z-index:1;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    align-items:center;
+    font-weight:1000;
+    text-shadow:0 3px 7px rgba(0,0,0,.35);
+  }
+  .front .num span:first-child{font-size:clamp(28px,4vw,54px)}
+  .front .num span:last-child{font-size:clamp(13px,1.5vw,18px); color:#fff9dc}
+  .back{
+    transform:rotateY(180deg);
+    padding:12px;
+    flex-direction:column;
+    gap:8px;
+  }
+  .back.heaven{
+    background:
+      radial-gradient(circle at 50% 20%, rgba(255,255,255,.55), transparent 25%),
+      linear-gradient(160deg,#52d6ff,#196df7 55%,#10317c);
+    border:2px solid #d7f9ff;
+  }
+  .back.hell{
+    background:
+      radial-gradient(circle at 50% 20%, rgba(255,217,80,.5), transparent 24%),
+      linear-gradient(160deg,#ff9b1f,#c51f1f 55%,#520000);
+    border:2px solid #ffcf76;
+  }
+  .emoji{font-size:clamp(34px,5vw,72px); line-height:1}
+  .result{font-size:clamp(18px,2.2vw,31px); font-weight:1000; line-height:1.05}
+  .desc{font-size:clamp(12px,1.35vw,18px); font-weight:800; opacity:.95}
+  .footer{
+    width:min(1100px, 100%);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    font-weight:800;
+    color:#ffe7a0;
+  }
+  button{
+    border:0;
+    border-radius:999px;
+    padding:13px 20px;
+    font-weight:1000;
+    font-size:16px;
+    color:#381600;
+    background:linear-gradient(180deg,#fff6c6,#ffc33e);
+    box-shadow:0 8px 20px rgba(0,0,0,.35);
+  }
+  .modal{
+    position:fixed; inset:0;
+    background:rgba(0,0,0,.72);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:9;
+    padding:22px;
+  }
+  .modal.show{display:flex}
+  .box{
+    width:min(720px, 100%);
+    border-radius:36px;
+    padding:32px 24px;
+    text-align:center;
+    box-shadow:0 22px 60px rgba(0,0,0,.6);
+    border:2px solid rgba(255,255,255,.35);
+    animation: pop .45s cubic-bezier(.2,1.2,.2,1);
+  }
+  @keyframes pop{from{transform:scale(.75);opacity:0}to{transform:scale(1);opacity:1}}
+  .box.heaven{background:linear-gradient(160deg,#44d9ff,#1b72ff,#101e70)}
+  .box.hell{background:linear-gradient(160deg,#ffb12d,#d72638,#3b0000)}
+  .bigEmoji{font-size:100px;line-height:1}
+  .bigText{font-size:clamp(38px,7vw,76px);font-weight:1000;line-height:1;margin:6px 0}
+  .bigSub{font-size:clamp(20px,3vw,34px);font-weight:900;color:#fff8d7}
+  .hint{font-size:14px;opacity:.9;margin-top:16px}
+  @media (max-width: 800px){
+    .cards{grid-template-columns: repeat(3, minmax(80px, 1fr));}
+    body{overflow:auto}
+    .wrap{min-height:auto}
+  }
+</style>
+</head>
+<body>
+<div class="sparkles"></div>
+<main class="wrap">
+  <section class="title">
+    <div class="small">🎊 ประตูเงินประตูทอง</div>
+    <h1>สวรรค์หรือนรก</h1>
+    <div class="subtitle">แตะการ์ดเพื่อเปิดด่าน — เจอสวรรค์คือผ่านทันที!</div>
+  </section>
+
+  <section class="stage">
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section class="footer">
+    <div id="status">เปิดแล้ว 0 / 15 ใบ</div>
+    <button onclick="resetGame()">เริ่มใหม่ / สุ่มใหม่</button>
+  </section>
+</main>
+
+<div class="modal" id="modal" onclick="closeModal()">
+  <div class="box" id="box">
+    <div class="bigEmoji" id="bigEmoji"></div>
+    <div class="bigText" id="bigText"></div>
+    <div class="bigSub" id="bigSub"></div>
+    <div class="hint">แตะหน้าจอเพื่อกลับไปเลือกการ์ด</div>
+  </div>
+</div>
+
+<script>
+  const TOTAL = 15;
+  let heavenIndex = 0;
+  let opened = 0;
+  const cardsEl = document.getElementById('cards');
+  const statusEl = document.getElementById('status');
+  const modal = document.getElementById('modal');
+  const box = document.getElementById('box');
+  const bigEmoji = document.getElementById('bigEmoji');
+  const bigText = document.getElementById('bigText');
+  const bigSub = document.getElementById('bigSub');
+
+  function vibrate(ms){ if(navigator.vibrate) navigator.vibrate(ms); }
+
+  function resetGame(){
+    opened = 0;
+    heavenIndex = Math.floor(Math.random() * TOTAL);
+    cardsEl.innerHTML = '';
+    for(let i=0;i<TOTAL;i++){
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.index = i;
+      const isHeaven = i === heavenIndex;
+      card.innerHTML = `
+        <div class="inner">
+          <div class="face front">
+            <div class="num">
+              <span>${i+1}</span>
+              <span>เลือกการ์ด</span>
+            </div>
+          </div>
+          <div class="face back ${isHeaven ? 'heaven':'hell'}">
+            <div class="emoji">${isHeaven ? '🪽':'🔥'}</div>
+            <div class="result">${isHeaven ? 'สวรรค์':'นรก'}</div>
+            <div class="desc">${isHeaven ? 'ผ่านด่านทันที!' : 'ดื่ม 1 ช็อต'}</div>
+          </div>
+        </div>
+      `;
+      card.addEventListener('click', () => openCard(card));
+      cardsEl.appendChild(card);
+    }
+    updateStatus();
+  }
+
+  function openCard(card){
+    if(card.classList.contains('open')) return;
+    card.classList.add('open');
+    opened++;
+    const isHeaven = Number(card.dataset.index) === heavenIndex;
+    updateStatus();
+    vibrate(isHeaven ? [60,40,60] : 60);
+    setTimeout(() => showResult(isHeaven), 680);
+  }
+
+  function showResult(isHeaven){
+    box.className = 'box ' + (isHeaven ? 'heaven' : 'hell');
+    bigEmoji.textContent = isHeaven ? '🪽' : '🔥';
+    bigText.textContent = isHeaven ? 'สวรรค์!' : 'นรก!';
+    bigSub.textContent = isHeaven ? 'ผ่านด่านทันที 🎉' : 'ดื่ม 1 ช็อต 🍻';
+    modal.classList.add('show');
+  }
+
+  function closeModal(){ modal.classList.remove('show'); }
+
+  function updateStatus(){
+    statusEl.textContent = `เปิดแล้ว ${opened} / ${TOTAL} ใบ`;
+  }
+
+  resetGame();
+</script>
+</body>
+</html>

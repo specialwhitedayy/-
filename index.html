@@ -93,8 +93,10 @@ const preview = document.getElementById("preview");
 const previewImg = document.getElementById("previewImg");
 const statusEl = document.getElementById("status");
 
+function imgPath(n){ return `card${n}.jpg`; }
+
 function openPreview(n){
-  previewImg.src = `cards/card${n}.jpg`;
+  previewImg.src = imgPath(n);
   preview.classList.add("show");
 }
 
@@ -103,7 +105,7 @@ function buildGallery(){
   order.forEach((n, idx)=>{
     const d = document.createElement("div");
     d.className = "card";
-    d.innerHTML = `<span class="label">ลำดับ ${idx+1} / ใบ ${n}</span><img src="cards/card${n}.jpg" alt="การ์ดใบที่ ${n}"><span class="tap">แตะดูเต็ม</span>`;
+    d.innerHTML = `<span class="label">ลำดับ ${idx+1} / ใบ ${n}</span><img src="${imgPath(n)}" alt="การ์ดใบที่ ${n}"><span class="tap">แตะดูเต็ม</span>`;
     d.onclick = ()=>openPreview(n);
     galleryGrid.appendChild(d);
   });
@@ -118,7 +120,7 @@ function buildGame(){
     c.dataset.card = n;
     c.innerHTML = `<div class="inner">
       <div class="face front"><div class="num"><b>${idx+1}</b><span>แตะเปิด</span></div></div>
-      <div class="face back"><img src="cards/card${n}.jpg" alt="การ์ดใบที่ ${n}"></div>
+      <div class="face back"><img src="${imgPath(n)}" alt="การ์ดใบที่ ${n}"></div>
     </div>`;
     c.onclick = () => {
       if(!c.classList.contains("open")) {
